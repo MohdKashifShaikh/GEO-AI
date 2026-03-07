@@ -92,7 +92,7 @@ Open an [issue](https://github.com/madeburo/GEO-AI/issues) with:
 2. Create a feature branch from `main`: `git checkout -b feature/your-feature`
 3. Make your changes following the coding standards above
 4. Add tests for new functionality
-5. Run `npx vitest run` and `npx tsc --build` to verify
+5. Run `npx vitest run` and `npx tsc --noEmit` to verify
 6. Commit with a clear message: `git commit -m "Add: brief description"`
 7. Push and open a PR against `main`
 

@@ -245,7 +245,7 @@ npm run build
 npx vitest run
 
 # Type check
-npx tsc --build
+npx tsc --noEmit
 ```
 
 ---

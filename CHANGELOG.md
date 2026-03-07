@@ -7,7 +7,8 @@ All notable changes to GEO AI Core will be documented in this file.
 ### Fixed
 
 #### Infrastructure
-- `tsc --build` now works from root — added `tsconfig.json` with project references and `composite: true` in package tsconfigs
+- Type checking now works from root — added `tsconfig.json` with `paths` mapping for cross-package resolution, `typecheck` script changed to `tsc --noEmit`
+- Fixed tsup DTS build — removed `composite: true` from package tsconfigs that conflicted with tsup's declaration generation
 
 #### geo-ai-core
 - `MemoryCrawlStore` — added `maxEntries` cap (default 10 000) with automatic eviction of oldest 20% on overflow, preventing unbounded memory growth

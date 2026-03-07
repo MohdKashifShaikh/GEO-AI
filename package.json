@@ -8,7 +8,7 @@
   "scripts": {
     "build": "npm run build --workspaces",
     "test": "vitest run",
-    "typecheck": "tsc --build"
+    "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
     "@types/node": "^25.3.5",

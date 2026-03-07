@@ -1,7 +1,15 @@
 {
-  "files": [],
-  "references": [
-    { "path": "packages/core" },
-    { "path": "packages/next" }
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "types": ["node"],
+    "paths": {
+      "geo-ai-core": ["./packages/core/src/index.ts"],
+      "geo-ai-core/ai": ["./packages/core/src/ai/index.ts"]
+    }
+  },
+  "include": [
+    "packages/core/src",
+    "packages/next/src"
   ]
 }
