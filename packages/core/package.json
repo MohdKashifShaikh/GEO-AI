@@ -1,7 +1,13 @@
 {
   "name": "geo-ai-core",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "license": "GPL-2.0",
+  "homepage": "https://www.geoai.run",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/madeburo/GEO-AI",
+    "directory": "packages/core"
+  },
   "type": "module",
   "exports": {
     ".": {
@@ -24,7 +30,8 @@
     "llms-txt",
     "llms.txt",
     "ai",
-    "generative-engine-optimization",
+    "ai-search-optimization",
+    "geoai",
     "chatgpt",
     "claude",
     "grok",

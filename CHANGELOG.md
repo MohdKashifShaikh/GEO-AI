@@ -2,6 +2,12 @@
 
 All notable changes to GEO AI Core will be documented in this file.
 
+## [0.1.2] - 2026-03-07
+
+### Docs
+- Updated documentation with new domain geoai.run
+- Added ecosystem overview
+
 ## [0.1.1] - 2026-03-07
 
 ### Fixed

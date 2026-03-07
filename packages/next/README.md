@@ -2,9 +2,11 @@
 
 [![npm](https://img.shields.io/npm/v/geo-ai-next)](https://npmjs.com/package/geo-ai-next)
 
-Part of the [GEO AI ecosystem](https://github.com/madeburo/GEO-AI). Full documentation → [geo-ai-core](https://npmjs.com/package/geo-ai-core)
+Part of the [GEO AI – AI Search Optimization](https://www.geoai.run) ecosystem. [GitHub](https://github.com/madeburo/GEO-AI). Full documentation → [geo-ai-core](https://npmjs.com/package/geo-ai-core)
 
 Thin Next.js wrapper for [geo-ai-core](../core) — middleware and App Router route handler for serving `llms.txt` / `llms-full.txt`.
+
+Try the analyzer at [geoai.run/analyze](https://www.geoai.run/analyze)
 
 ## Installation
 

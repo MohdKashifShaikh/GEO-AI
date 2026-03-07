@@ -2,7 +2,9 @@
 
 ![GEO AI](GEO-AI.png)
 
-**Universal TypeScript engine for Generative Engine Optimization**
+**GEO AI – AI Search Optimization**
+
+Universal TypeScript engine for optimizing websites for AI search engines.
 
 [![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0)
 [![Node.js](https://img.shields.io/badge/Node.js-20%2B-339933.svg)](https://nodejs.org/)
@@ -12,6 +14,66 @@ A zero-dependency TypeScript engine that optimizes websites for AI search engine
 
 - **geo-ai-core** – Universal engine (llms.txt generation, bot rules, crawl tracking, caching, encryption, SEO signals, AI descriptions)
 - **geo-ai-next** – Thin Next.js wrapper (~200 lines): middleware + route handler
+
+Try the analyzer at [geoai.run/analyze](https://www.geoai.run/analyze)
+
+---
+
+## Why GEO AI?
+
+Traditional SEO tools are built for search engines like Google. But AI search engines work differently — they read structured content, not meta keywords.
+
+GEO AI provides infrastructure for **AI Search Optimization**:
+
+- ✅ `llms.txt` generation — structured content for AI crawlers
+- ✅ AI crawler management — per-bot allow/disallow rules for 16+ bots
+- ✅ AI metadata — meta tags, Link headers, JSON-LD signals
+- ✅ Structured signals — pricing, availability, variants in machine-readable format
+
+---
+
+## Architecture
+
+```
+                         GEO AI
+                           │
+            ┌──────────────┼──────────────┐
+            │              │              │
+        WordPress       Shopify        Node.js
+            │              │              │
+       GEO-AI-Woo   GEO-AI-Shopify   geo-ai-core
+            │                             │
+       WooCommerce                    geo-ai-next
+```
+
+### Ecosystem
+
+| Platform | Package |
+|----------|---------|
+| WordPress / WooCommerce | `geo-ai-woo` |
+| Shopify | `geo-ai-shopify` |
+| Next.js | `geo-ai-next` |
+| Any Node.js | `geo-ai-core` |
+
+---
+
+## Quick Start
+
+```bash
+npm install geo-ai-core
+```
+
+```typescript
+import { createGeoAI } from 'geo-ai-core';
+
+const geo = createGeoAI({
+  siteName: 'My Site',
+  siteUrl: 'https://example.com',
+});
+
+// Generate llms.txt
+const llmsTxt = await geo.generateLlms();
+```
 
 ---
 
@@ -74,8 +136,6 @@ AES-256-GCM encryption for API keys via `node:crypto`. Format: `base64(IV[12] + 
 
 ---
 
-## Quick Start
-
 ### Installation
 
 ```bash
@@ -100,6 +160,8 @@ const geo = createGeoAI({
       { title: 'Hello World', url: '/blog/hello', description: 'First post' },
     ],
   },
+});
+
 // Generate llms.txt
 const llmsTxt = await geo.generateLlms(false);
 
@@ -212,13 +274,6 @@ interface GeoAIConfig {
 | `geo-ai-core` | Universal engine | `.` (main), `./ai` (AI generator) |
 | `geo-ai-next` | Next.js middleware + route handler | `.` |
 
-### Ecosystem
-
-| Package | Platform | Status |
-|---------|----------|--------|
-| `geo-ai-core` | Any (Node.js) | Active development |
-| `geo-ai-next` | Next.js >= 16 | Active development |
-
 ---
 
 ## Requirements
@@ -265,6 +320,6 @@ GEO AI Core is open-source software licensed under the [GPL v2](LICENSE).
 ## Credits
 
 - **Author:** Made Büro
-- **Website:** [madeburo.com](https://madeburo.com)
+- **Website:** [geoai.run](https://www.geoai.run)
 - **GitHub:** [@madeburo](https://github.com/madeburo/GEO-AI)
 - **X:** [@imadeburo](https://x.com/imadeburo)

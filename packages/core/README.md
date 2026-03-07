@@ -2,11 +2,13 @@
 
 [![npm](https://img.shields.io/npm/v/geo-ai-core)](https://npmjs.com/package/geo-ai-core)
 
-Part of the [GEO AI ecosystem](https://github.com/madeburo/GEO-AI)
+Part of the [GEO AI – AI Search Optimization](https://www.geoai.run) ecosystem. [GitHub](https://github.com/madeburo/GEO-AI)
 
-Zero-dependency TypeScript engine for Generative Engine Optimization (GEO). Optimizes websites for AI search engines — ChatGPT, Claude, Gemini, Perplexity, DeepSeek, Grok and more.
+Zero-dependency TypeScript engine for AI Search Optimization (GEO). Optimizes websites for AI search engines — ChatGPT, Claude, Gemini, Perplexity, DeepSeek, Grok and more.
 
 Works with any Node.js framework or plain server.
+
+Try the analyzer at [geoai.run/analyze](https://www.geoai.run/analyze)
 
 ## Installation
 
