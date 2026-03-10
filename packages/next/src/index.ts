@@ -8,6 +8,10 @@ export type { GeoAIMiddlewareConfig } from './middleware';
 export { createLlmsHandler } from './handler';
 export type { LlmsHandlerConfig } from './handler';
 
+// Static file generation (build step)
+export { generateLlmsFiles } from './generate';
+export type { GenerateLlmsFilesConfig, GenerateLlmsFilesResult } from './generate';
+
 // Re-export all public types, interfaces, and classes from geo-ai-core
 export {
   createGeoAI,

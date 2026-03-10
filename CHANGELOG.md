@@ -2,6 +2,31 @@
 
 All notable changes to GEO AI Core will be documented in this file.
 
+## [0.2.0] - 2026-03-10
+
+### Added
+
+#### geo-ai-next
+- `generateLlmsFiles(config)` — static file generation for `public/llms.txt` and `public/llms-full.txt` before `next build`
+  - Creates output directory if missing
+  - Atomic writes (temp file + rename) to prevent partial files
+  - Configurable `outDir` (default: `public`) and `locale`
+  - Logs progress and file sizes to stdout
+  - Throws with descriptive error on failure
+- `geo-ai-generate` CLI binary — run via `npx geo-ai-generate` with optional `--config` flag
+- New exports: `GenerateLlmsFilesConfig`, `GenerateLlmsFilesResult` types
+
+#### Testing
+- 9 new tests for `generateLlmsFiles`: file creation, directory creation, overwrite safety, non-empty content, isFull flags, locale passthrough, re-generation, error handling, logging
+
+### Fixed
+
+#### geo-ai-next
+- **Production 404 on `/llms.txt`** — middleware and route handler only served content dynamically at runtime; static hosting (Vercel, Netlify, `next export`) had no files to serve. `generateLlmsFiles()` now writes static files to `public/` as a pre-build step.
+
+### Docs
+- README: added Static File Generation section (recommended approach), CLI usage, troubleshooting for 404 on `/llms.txt`
+
 ## [0.1.2] - 2026-03-07
 
 ### Docs

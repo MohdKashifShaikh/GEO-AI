@@ -10,10 +10,15 @@ Universal TypeScript engine for optimizing websites for AI search engines.
 [![Node.js](https://img.shields.io/badge/Node.js-20%2B-339933.svg)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5%2B-3178C6.svg)](https://www.typescriptlang.org/)
 
-A zero-dependency TypeScript engine that optimizes websites for AI search engines like ChatGPT, Claude, Gemini, Perplexity, DeepSeek, Grok, Apple Siri, Amazon Alexa, and more. Works with any framework – Next.js, Nuxt, Astro, SvelteKit, or plain Node.js.
+A zero-dependency TypeScript engine that optimizes websites for AI search engines like ChatGPT, Claude, Gemini, Perplexity, DeepSeek, Grok, YandexGPT, GigaChat, and more. The core works with any Node.js environment — official integrations currently include Next.js, with WordPress and Shopify available as separate ecosystem packages.
 
 - **geo-ai-core** – Universal engine (llms.txt generation, bot rules, crawl tracking, caching, encryption, SEO signals, AI descriptions)
-- **geo-ai-next** – Thin Next.js wrapper (~200 lines): middleware + route handler
+- **geo-ai-next** – Next.js wrapper: static file generation, middleware + route handler
+
+> **Not sure what's what?**
+> - `geo-ai-core` — open-source npm library, zero dependencies, works anywhere Node.js runs
+> - `geo-ai-next` — open-source npm library, Next.js integration built on top of `geo-ai-core`
+> - [geoai.run](https://www.geoai.run) — the analyzer, docs, and llms.txt specification site
 
 Try the analyzer at [geoai.run/analyze](https://www.geoai.run/analyze)
 
@@ -69,10 +74,16 @@ import { createGeoAI } from 'geo-ai-core';
 const geo = createGeoAI({
   siteName: 'My Site',
   siteUrl: 'https://example.com',
+  provider: {
+    Pages: [{ title: 'Home', url: '/', description: 'Welcome' }],
+  },
 });
 
 // Generate llms.txt
-const llmsTxt = await geo.generateLlms();
+const llmsTxt = await geo.generateLlms(false);
+
+// Generate llms-full.txt
+const llmsFullTxt = await geo.generateLlms(true);
 ```
 
 ---
@@ -200,6 +211,32 @@ const geo = createGeoAI({
 });
 ```
 
+### Next.js — Static File Generation (Recommended)
+
+Generate `public/llms.txt` and `public/llms-full.txt` before `next build`:
+
+```typescript
+// scripts/generate-llms.ts
+import { generateLlmsFiles } from 'geo-ai-next';
+
+await generateLlmsFiles({
+  siteName: 'My Site',
+  siteUrl: 'https://example.com',
+  provider: new MyProvider(),
+});
+```
+
+```json
+{
+  "scripts": {
+    "geo:generate": "geo-ai-generate",
+    "build": "npm run geo:generate && next build"
+  }
+}
+```
+
+Next.js serves files from `public/` automatically — no middleware needed. Middleware and route handler still work for dynamic use cases.
+
 ### Next.js Middleware
 
 ```typescript
@@ -213,7 +250,11 @@ export default geoAIMiddleware({
   cache: '24h',
 });
 
-export const config
+export const config = {
+  matcher: ['/((?!_next/static|_next/image|favicon.ico).*)'],
+};
+```
+
 ### Next.js Route Handler
 
 ```typescript
@@ -226,6 +267,8 @@ export const { GET } = createLlmsHandler({
   provider: new MyProvider(),
   cacheMaxAge: 3600, // seconds, default 3600
 });
+```
+
 ### AI Description Generation
 
 ```typescript
@@ -272,7 +315,7 @@ interface GeoAIConfig {
 | Package | Description | Entry Points |
 |---------|-------------|-------------|
 | `geo-ai-core` | Universal engine | `.` (main), `./ai` (AI generator) |
-| `geo-ai-next` | Next.js middleware + route handler | `.` |
+| `geo-ai-next` | Next.js: static generation, middleware, route handler | `.` |
 
 ---
 

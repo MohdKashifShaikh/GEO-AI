@@ -45,6 +45,9 @@
   "files": [
     "dist"
   ],
+  "bin": {
+    "geo-ai-generate": "./dist/cli.mjs"
+  },
   "scripts": {
     "build": "tsup",
     "typecheck": "tsc --noEmit"

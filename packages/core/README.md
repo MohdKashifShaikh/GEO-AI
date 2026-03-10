@@ -4,9 +4,9 @@
 
 Part of the [GEO AI – AI Search Optimization](https://www.geoai.run) ecosystem. [GitHub](https://github.com/madeburo/GEO-AI)
 
-Zero-dependency TypeScript engine for AI Search Optimization (GEO). Optimizes websites for AI search engines — ChatGPT, Claude, Gemini, Perplexity, DeepSeek, Grok and more.
+Zero-dependency TypeScript engine for AI Search Optimization (GEO). Optimizes websites for AI search engines — ChatGPT, Claude, Gemini, Perplexity, DeepSeek, Grok, YandexGPT, GigaChat and more.
 
-Works with any Node.js framework or plain server.
+Works with any Node.js framework or plain server. For Next.js, use [`geo-ai-next`](https://npmjs.com/package/geo-ai-next) which adds static file generation, middleware, and a route handler on top.
 
 Try the analyzer at [geoai.run/analyze](https://www.geoai.run/analyze)
 
@@ -14,6 +14,8 @@ Try the analyzer at [geoai.run/analyze](https://www.geoai.run/analyze)
 
 ```bash
 npm install geo-ai-core
+# Next.js projects:
+npm install geo-ai-next
 ```
 
 ## Quick Start
@@ -67,12 +69,15 @@ const geo = createGeoAI({
   siteName: 'My Site',
   siteUrl: 'https://example.com',
   provider: new MyProvider(),
+  crawlers: 'all',
+  cache: '24h',
+  crawlTracking: true,
 });
 ```
 
 ## AI Description Generation
 
-Separate entry point — only loaded when imported:
+Separate entry point — only loaded when imported, fully tree-shakeable:
 
 ```typescript
 import { AiGenerator } from 'geo-ai-core/ai';
@@ -97,7 +102,7 @@ Bulk generation with progress (concurrent within each batch):
 const results = await ai.bulkGenerate(items, {
   batchSize: 5,
   maxItems: 50,
-  onProgress: ({ completed, total }) => console.log(`${completed}/${total}`),
+  onProgress: (completed, total) => console.log(`${completed}/${total}`),
 });
 ```
 
@@ -121,8 +126,8 @@ interface GeoAIConfig {
 
 | Entry | Import | Contents |
 |-------|--------|----------|
-| Main | `geo-ai-core` | `createGeoAI`, `LlmsGenerator`, `BotRulesEngine`, `CrawlTracker`, `SeoGenerator`, `CryptoService`, cache adapters, types |
-| AI | `geo-ai-core/ai` | `AiGenerator`, `RateLimiter`, `buildPrompt`, `classifyAiError` |
+| Main | `geo-ai-core` | `createGeoAI`, `LlmsGenerator`, `BotRulesEngine`, `CrawlTracker`, `SeoGenerator`, `CryptoService`, cache adapters, all types |
+| AI | `geo-ai-core/ai` | `AiGenerator`, `RateLimiter`, `buildPrompt`, `classifyAiError`, `AiProviderError` |
 
 ## Supported AI Crawlers
 
