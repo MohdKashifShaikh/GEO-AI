@@ -224,4 +224,4 @@ geo-ai <command> --help              # per-command help
 
 ---
 
-*Built by [Made Büro](https://madeburo.com)*
+*hi@geoai.run · [Geoai.run](https://www.geoai.run)*
