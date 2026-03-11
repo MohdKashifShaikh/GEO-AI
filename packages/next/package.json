@@ -56,7 +56,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "geo-ai-core": "^0.2.1"
+    "geo-ai-core": "^0.2.2"
   },
   "engines": {
     "node": ">=20"

@@ -1,6 +1,6 @@
 import type { ParsedArgs } from '../lib/args.js';
 import type { FsAdapter } from '../lib/fs.js';
-import { NetworkError } from '../lib/errors.js';
+import { safeFetch } from '../lib/fetch.js';
 import * as path from 'node:path';
 
 export type ValidationStatus = 'pass' | 'warn' | 'fail' | 'not_found';
@@ -62,22 +62,21 @@ async function validateRemote(
     FILES.map(async (file) => {
       const target = `${baseUrl.replace(/\/$/, '')}/${file}`;
       let content: string | null;
-      try {
-        const res = await fetchFn(target);
-        if (res.status === 404) {
-          content = null;
-        } else if (res.ok) {
-          content = await res.text();
-        } else {
-          const status: ValidationStatus = 'fail';
-          return {
-            target,
-            status,
-            message: `${target} returned HTTP ${res.status}. Check your deployment.`,
-          };
+      const result = await safeFetch(target, fetchFn, 10_000, 1_048_576);
+      if (!result.ok) {
+        if ('timedOut' in result) {
+          return { target, status: 'fail', message: `${target} timed out. The server did not respond in time.` };
         }
-      } catch (err) {
-        throw new NetworkError(target, err);
+        if ('tooLarge' in result) {
+          return { target, status: 'fail', message: `${target} response body too large (> 1 MiB).` };
+        }
+        if (result.httpStatus === 404) {
+          content = null;
+        } else {
+          return { target, status: 'fail', message: `${target} returned HTTP ${result.httpStatus}. Check your deployment.` };
+        }
+      } else {
+        content = result.text;
       }
       const status = assignStatus(content);
       return { target, status, message: recommendation(status, target) };

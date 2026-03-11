@@ -1,6 +1,6 @@
 import { AI_BOTS } from 'geo-ai-core';
 import { loadConfig } from '../lib/config.js';
-import { NetworkError } from '../lib/errors.js';
+import { safeFetch } from '../lib/fetch.js';
 import type { FsAdapter } from '../lib/fs.js';
 import type { Logger } from '../lib/logger.js';
 import type { ParsedArgs } from '../lib/args.js';
@@ -16,6 +16,7 @@ export interface InspectSummary {
 }
 
 export async function runInspect(
+  cwd: string,
   args: ParsedArgs,
   _fs: FsAdapter,
   fetchFn: typeof globalThis.fetch,
@@ -28,19 +29,19 @@ export async function runInspect(
 
     for (const file of files) {
       const url = `${baseUrl}/${file}`;
-      let content: string;
-      try {
-        const res = await fetchFn(url);
-        if (!res.ok) {
-          logger.warn(`${url} returned HTTP ${res.status}`);
-          continue;
+      const result = await safeFetch(url, fetchFn, 10_000, 1_048_576);
+      if (!result.ok) {
+        if ('timedOut' in result) {
+          logger.warn(`${url} timed out`);
+        } else if ('tooLarge' in result) {
+          logger.warn(`${url} response body too large (> 1 MiB)`);
+        } else {
+          logger.warn(`${url} returned HTTP ${result.httpStatus}`);
         }
-        content = await res.text();
-      } catch (err) {
-        throw new NetworkError(url, err);
+        continue;
       }
       logger.info(`--- ${url} ---`);
-      for (const line of content.split('\n')) {
+      for (const line of result.text.split('\n')) {
         logger.info(line);
       }
     }
@@ -49,7 +50,7 @@ export async function runInspect(
   }
 
   // 10.1 Load config — propagate errors to top-level handler
-  const config = await loadConfig(process.cwd(), args.config);
+  const config = await loadConfig(cwd, args.config);
 
   // 10.2 Build InspectSummary from config
   const outDir = args.out ?? config.outDir ?? './public';

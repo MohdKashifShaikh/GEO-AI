@@ -1,6 +1,19 @@
 import type { Resource } from './types';
 
 /**
+ * Escapes HTML special characters for safe interpolation into attribute values.
+ * Replacement order: `&` first to avoid double-escaping.
+ */
+export function escapeHtmlAttr(s: string): string {
+  return s
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+/**
  * SeoGenerator — generates meta tags, Link header, and JSON-LD
  * structured data for AI search engine discoverability.
  */
@@ -27,8 +40,8 @@ export class SeoGenerator {
    */
   generateMetaTags(): string {
     return [
-      `<meta name="llms" content="${this.llmsUrl}">`,
-      `<meta name="llms-full" content="${this.llmsFullUrl}">`,
+      `<meta name="llms" content="${escapeHtmlAttr(this.llmsUrl)}">`,
+      `<meta name="llms-full" content="${escapeHtmlAttr(this.llmsFullUrl)}">`,
     ].join('\n');
   }
 
@@ -38,7 +51,7 @@ export class SeoGenerator {
    * Returns: <{siteUrl}/llms.txt>; rel="ai-content-index"; type="text/plain"
    */
   generateLinkHeader(): string {
-    return `<${this.llmsUrl}>; rel="ai-content-index"; type="text/plain"`;
+    return `<${escapeHtmlAttr(this.llmsUrl)}>; rel="ai-content-index"; type="text/plain"`;
   }
 
   /**

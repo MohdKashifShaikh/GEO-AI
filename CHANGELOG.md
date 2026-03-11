@@ -2,6 +2,23 @@
 
 All notable changes to GEO AI Core will be documented in this file.
 
+## [0.2.2] - 2026-03-12
+
+### Security
+
+#### geo-ai-core (`v0.2.2`)
+- **[CRITICAL] XSS fix — HTML attribute escaping in `SeoGenerator`** — config-derived values (`siteUrl`, `siteName`, etc.) are now escaped via `escapeHtmlAttr()` before interpolation into `<meta>` and `<link>` attribute values. Characters `"`, `'`, `<`, `>`, `&` are replaced with `&quot;`, `&#39;`, `&lt;`, `&gt;`, `&amp;` respectively. `generateJsonLd()` is unaffected (returns a plain object).
+
+### Fixed
+
+#### geo-ai-core (`v0.2.2`)
+- **[HIGH] Unbounded `MemoryCacheAdapter` growth** — when all entries were within TTL, `evictExpired()` found nothing to remove and the store grew past `maxEntries`. Added FIFO eviction pass after `evictExpired()`: oldest-inserted entries are deleted until `store.size <= maxEntries`.
+
+#### geo-ai-cli (`v0.1.1`)
+- **[MEDIUM] No fetch timeout** — `validateRemote` and the `--url` branch of `runInspect` called `fetchFn(url)` without an `AbortController`. Introduced `safeFetch(url, fetchFn, timeoutMs, maxBytes)` helper that aborts after 10 s and returns `{ timedOut: true }`.
+- **[MEDIUM] No response size limit** — `await res.text()` read the full body with no cap. `safeFetch` now streams via `ReadableStream` and returns `{ tooLarge: true }` if the body exceeds 1 MiB (1 048 576 bytes).
+- **[LOW] Direct `process.cwd()` calls in command functions** — `runGenerate` and `runInspect` called `process.cwd()` inline, making them hard to test. Both now accept `cwd: string` as first parameter (matching `runInit`); `cli.ts` passes `process.cwd()` at call sites.
+
 ## [0.2.1] - 2026-03-11
 
 ### Added

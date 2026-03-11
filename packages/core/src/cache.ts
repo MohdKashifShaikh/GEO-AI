@@ -38,6 +38,12 @@ export class MemoryCacheAdapter implements CacheAdapter {
 
     if (this.store.size > this.maxEntries) {
       this.evictExpired();
+      // FIFO eviction: if still over cap after removing expired entries,
+      // delete oldest-inserted entries until within bounds
+      for (const k of this.store.keys()) {
+        if (this.store.size <= this.maxEntries) break;
+        this.store.delete(k);
+      }
     }
   }
 

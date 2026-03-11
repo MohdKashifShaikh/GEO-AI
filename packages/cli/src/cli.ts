@@ -130,7 +130,7 @@ async function main(): Promise<void> {
       await runInit(process.cwd(), nodeFsAdapter, logger);
       break;
     case 'generate':
-      await runGenerate(args, nodeFsAdapter, logger);
+      await runGenerate(process.cwd(), args, nodeFsAdapter, logger);
       break;
     case 'validate': {
       const { results, exitCode } = await runValidate(args, nodeFsAdapter, fetch);
@@ -147,7 +147,7 @@ async function main(): Promise<void> {
       break;
     }
     case 'inspect':
-      await runInspect(args, nodeFsAdapter, fetch, logger);
+      await runInspect(process.cwd(), args, nodeFsAdapter, fetch, logger);
       break;
   }
 }

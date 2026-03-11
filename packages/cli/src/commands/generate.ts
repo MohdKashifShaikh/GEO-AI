@@ -7,12 +7,13 @@ import type { Logger } from '../lib/logger.js';
 import type { ParsedArgs } from '../lib/args.js';
 
 export async function runGenerate(
+  cwd: string,
   args: ParsedArgs,
   fs: FsAdapter,
   logger: Logger,
 ): Promise<void> {
   // 8.1 Load config — propagate ConfigNotFoundError, ConfigParseError, ConfigValidationError
-  const config = await loadConfig(process.cwd(), args.config);
+  const config = await loadConfig(cwd, args.config);
 
   // 8.2 Generate llms.txt and llms-full.txt via geo-ai-core
   let llmsTxt: string;
