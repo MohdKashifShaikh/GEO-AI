@@ -4,12 +4,42 @@ All notable changes to GEO AI Core will be documented in this file.
 
 ## [0.2.1] - 2026-03-11
 
-### Docs
-- Added `geo-ai-cli` to ecosystem table and README across all packages
-- Added `description` field to `geo-ai-core` and `geo-ai-next` package.json for npm listing
-- Added `README.md` and `CHANGELOG.md` to `files` in all packages
+### Added
 
-## [0.2.0] - 2026-03-10
+#### geo-ai-cli (new package — `v0.1.0`)
+
+A new standalone CLI package for the GEO AI ecosystem. Install once, use anywhere — no application code required.
+
+```bash
+npm install -g geo-ai-cli
+# or per-project:
+npm install --save-dev geo-ai-cli
+```
+
+**Commands:**
+
+- `geo-ai init` — scaffolds a `geo-ai.config.ts` starter file in the current directory with placeholder values for `siteName`, `siteUrl`, `siteDescription`, `crawlers`, and a `provider` section. Exits safely if a config already exists.
+- `geo-ai generate` — loads config (auto-discovers `geo-ai.config.ts` → `.js` → `.json`), calls `geo-ai-core` to generate content, and writes `llms.txt` + `llms-full.txt` to `./public` (or `--out <path>`). Creates the output directory if missing.
+- `geo-ai validate` — checks that `llms.txt` and `llms-full.txt` are present and have valid content. Supports local files (`--path <dir>`) and remote URLs (`--url <url>`). Reports `pass` / `warn` / `fail` / `not_found` per file with actionable recommendations. Exits `1` on any `fail` or `not_found`.
+- `geo-ai inspect` — previews your config: site name, URL, description, crawler rules, output directory, and resource sections with item counts. With `--url`, fetches and displays remote `llms.txt` / `llms-full.txt` content.
+
+**Flags:**
+- `--config <path>` — override config file path
+- `--out <path>` — override output directory (generate)
+- `--path <dir>` — local directory to validate
+- `--url <url>` — remote base URL for validate/inspect
+- `--help` / `-h` — show help (global or per-command)
+- `--version` / `-v` — show version
+
+**Error handling:**
+- Typed error classes with exit codes: `ConfigNotFoundError`, `ConfigParseError`, `ConfigValidationError`, `FsWriteError`, `NetworkError` → exit `1`; `InternalError` → exit `2`
+- `DEBUG=geo-ai` env var prints stack traces to stderr
+- No raw stack traces on stdout
+
+**Technical:**
+- Zero runtime dependencies beyond `geo-ai-core`
+- ESM-only build (`dist/cli.mjs`) with `#!/usr/bin/env node` shebang
+- Programmatic API via `dist/i## [0.2.0] - 2026-03-10
 
 ### Added
 

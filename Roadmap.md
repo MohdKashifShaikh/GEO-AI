@@ -14,6 +14,7 @@ Make any site visible to ChatGPT, Claude, Perplexity, Gemini, Grok & other AI se
 | [GEO AI Shopify](https://github.com/madeburo/GEO-AI-Shopify) | Shopify / TypeScript | ✅ Released |
 | [geo-ai-core](https://www.npmjs.com/package/geo-ai-core) | TypeScript (framework-agnostic) | ✅ Released |
 | [geo-ai-next](https://www.npmjs.com/package/geo-ai-next) | Next.js | ✅ Released |
+| [geo-ai-cli](https://www.npmjs.com/package/geo-ai-cli) | CLI / Any Node.js project | ✅ Released |
 
 ---
 
@@ -34,7 +35,20 @@ Make any site visible to ChatGPT, Claude, Perplexity, Gemini, Grok & other AI se
 
 - Middleware intercepting `/llms.txt` and `/llms-full.txt`
 - App Router route handler
+- Static file generation (`generateLlmsFiles`) for Vercel/Netlify/`next export`
+- `geo-ai-generate` binary for pre-build step
 - Zero-config setup: `npm install geo-ai-next` + one config object
+
+**geo-ai-cli** — Standalone CLI for any Node.js project
+
+- `geo-ai init` — scaffolds `geo-ai.config.ts` with starter template
+- `geo-ai generate` — generates `llms.txt` + `llms-full.txt` from config into `./public`
+- `geo-ai validate` — checks local files or remote URLs for presence and valid content
+- `geo-ai inspect` — previews config: site info, crawler rules, resource sections with item counts
+- Zero runtime dependencies beyond `geo-ai-core`
+- Config auto-discovery: `.ts` → `.js` → `.json`
+- Typed error classes with exit codes (`1` user errors, `2` internal)
+- `DEBUG=geo-ai` for verbose stack traces
 
 ---
 
@@ -170,61 +184,33 @@ Tools like Ahrefs Site Audit, Google PageSpeed Insights, and SEO audit tools gen
 
 ---
 
-## Phase 5: GEO AI CLI
+## Phase 5: GEO AI CLI ✅
 
-**geo-ai-cli** — Command-line tool for developers.
+**geo-ai-cli** — Released `v0.1.0`. Install via npm:
 
 ```bash
-# Initialize GEO AI in any project
-npx geo-ai init
-
-# Analyze any website from terminal
-npx geo-ai analyze https://example.com
-
-# Generate llms.txt from local content
-npx geo-ai generate --source ./content --output ./public/llms.txt
-
-# Check AI crawler access
-npx geo-ai crawlers https://example.com
+npm install -g geo-ai-cli
+# or per-project:
+npm install --save-dev geo-ai-cli
 ```
 
-### `geo-ai init`
+**Implemented commands:**
 
-Interactive setup wizard:
-
-```
-? Select your framework: (Next.js / NestJS / Node.js / Static)
-? Site name: My Store
-? Site URL: https://mystore.com
-? Enable AI crawl tracking? (Y/n)
-
-✓ Created geo-ai.config.ts
-✓ Updated middleware.ts
-✓ Ready — run `npm run dev` and visit /llms.txt
+```bash
+geo-ai init                          # scaffold geo-ai.config.ts
+geo-ai generate [--config] [--out]   # generate llms.txt + llms-full.txt
+geo-ai validate [--path] [--url]     # validate local files or remote URL
+geo-ai inspect  [--config] [--url]   # preview config or remote llms files
+geo-ai --version                     # show version
+geo-ai --help                        # show help
+geo-ai <command> --help              # per-command help
 ```
 
-### `geo-ai analyze`
+**Planned for future CLI versions:**
 
-Same engine as the web analyzer, but from the terminal:
-
-```
-$ npx geo-ai analyze https://example.com
-
-AI Visibility Score: 45/100
-
-✓ Site accessible
-✗ No llms.txt found
-✗ No AI meta tags
-✗ No crawler rules in robots.txt
-✗ Schema.org missing
-
-Run `npx geo-ai init` to fix these issues.
-```
-
-**Why CLI matters:**
-- Developers prefer terminal over web tools
-- `npx geo-ai analyze` is shareable — one command in any README or blog post
-- Drives npm downloads → visible on npm trending
+- `geo-ai analyze <url>` — AI visibility audit from terminal (same engine as geoai.run/analyze)
+- `geo-ai crawlers <url>` — check which AI bots can access the site
+- Interactive `geo-ai init` wizard with framework detection (Next.js / NestJS / Node.js / Static)
 
 ---
 
@@ -260,9 +246,7 @@ ai-crawlers
 |-------|---------|-------------|
 | 7 | geo-ai-nestjs | NestJS module — interceptor + decorator pattern |
 | 8 | geo-ai-laravel | Laravel package — middleware + Artisan commands |
-| 9 | geo-ai-nuxt | Nuxt.js integration — server middleware + composables |
-| 10 | geo-ai-astro | Astro integration — endpoint + middleware |
-| 11 | GEO AI Analytics | Dashboard for tracking AI search referrals and citations |
+| 9 | GEO AI Assistant | AI-powered analysis companion that explains GEO findings, recommends fixes, and helps teams improve AI search readiness |
 
 ---
 
