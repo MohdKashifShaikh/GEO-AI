@@ -1,0 +1,75 @@
+{
+  "name": "geo-ai-nest",
+  "version": "0.1.1",
+  "description": "NestJS integration for GEO AI — dynamic module, middleware, controller, guard, interceptor and decorators for llms.txt / AI Search Optimization",
+  "keywords": [
+    "geo",
+    "llms",
+    "llms-txt",
+    "llms.txt",
+    "ai",
+    "ai-search-optimization",
+    "geoai",
+    "nestjs",
+    "nest",
+    "middleware",
+    "chatgpt",
+    "claude",
+    "grok",
+    "perplexity",
+    "robots-txt",
+    "crawler",
+    "ai-search",
+    "nodejs",
+    "node.js",
+    "typescript"
+  ],
+  "license": "GPL-2.0",
+  "homepage": "https://www.geoai.run",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/madeburo/GEO-AI.git",
+    "directory": "packages/geo-ai-nest"
+  },
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "geo-ai-core": "^0.2.2"
+  },
+  "peerDependencies": {
+    "@nestjs/common": ">=10",
+    "@nestjs/core": ">=10"
+  },
+  "devDependencies": {
+    "@nestjs/common": "^10.0.0",
+    "@nestjs/core": "^10.0.0",
+    "@nestjs/platform-express": "^10.0.0",
+    "@nestjs/testing": "^10.0.0",
+    "rxjs": "^7.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.5.0"
+  }
+}

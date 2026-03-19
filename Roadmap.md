@@ -15,6 +15,7 @@ Make any site visible to ChatGPT, Claude, Perplexity, Gemini, Grok & other AI se
 | [geo-ai-core](https://www.npmjs.com/package/geo-ai-core) | TypeScript (framework-agnostic) | ✅ Released |
 | [geo-ai-next](https://www.npmjs.com/package/geo-ai-next) | Next.js | ✅ Released |
 | [geo-ai-cli](https://www.npmjs.com/package/geo-ai-cli) | CLI / Any Node.js project | ✅ Released |
+| [geo-ai-nest](https://www.npmjs.com/package/geo-ai-nest) | NestJS | 🚧 In Development |
 
 ---
 
@@ -22,9 +23,8 @@ Make any site visible to ChatGPT, Claude, Perplexity, Gemini, Grok & other AI se
 
 | Phase | Package | Description |
 |-------|---------|-------------|
-| 7 | geo-ai-nestjs | NestJS module — interceptor + decorator pattern |
-| 8 | geo-ai-laravel | Laravel package — middleware + Artisan commands |
-| 9 | GEO AI Assistant | AI-powered analysis companion that explains GEO findings, recommends fixes, and helps teams improve AI search readiness |
+| 7 | geo-ai-laravel | Laravel package — middleware + Artisan commands |
+| 8 | GEO AI Assistant | AI-powered analysis companion that explains GEO findings, recommends fixes, and helps teams improve AI search readiness |
 
 ---
 
@@ -194,7 +194,50 @@ Tools like Ahrefs Site Audit, Google PageSpeed Insights, and SEO audit tools gen
 
 ---
 
-## Phase 5: GEO AI CLI ✅
+## Phase 5: geo-ai-nest 
+
+**geo-ai-nest** — NestJS adapter (~250–300 lines) around `geo-ai-core`.
+
+Install:
+
+```bash
+npm install geo-ai-nest
+```
+
+**Implemented:**
+
+- `GeoAIModule.forRoot()` / `forRootAsync()` — dynamic module with full async provider support (`useFactory`, `useClass`, `useExisting`)
+- `GeoAIService` — injectable service exposing all `geo-ai-core` capabilities via DI
+- `GeoAIMiddleware` — HTTP middleware exclusively owning `/llms.txt`, `/llms-full.txt`, `/.well-known/llms.txt`; compatible with Express and Fastify adapters
+- `GeoAIController` — auto-registered controller serving `/robots-ai.txt` with dynamic `Cache-Control`
+- `GeoAIGuard` — route guard restricting access to verified AI bot requests
+- `GeoAIInterceptor` — response interceptor injecting the `Link` header via RxJS `tap`
+- `@IsAIBot()` — parameter decorator injecting detected bot name (or `null`) into handler params
+- `@GeoAIMeta()` — class/method decorator attaching GEO metadata via `SetMetadata`
+- Full re-export of all `geo-ai-core` public API — one import for everything
+- Dual ESM/CJS build, TypeScript declarations, NestJS 10+ peer dependency
+
+```typescript
+// app.module.ts
+import { GeoAIModule } from 'geo-ai-nest';
+
+@Module({
+  imports: [
+    GeoAIModule.forRoot({
+      siteName: 'My Site',
+      siteUrl: 'https://example.com',
+      provider: { Pages: [{ title: 'Home', url: '/', description: 'Welcome' }] },
+      isGlobal: true,
+      injectLinkHeader: true,
+    }),
+  ],
+})
+export class AppModule {}
+```
+
+---
+
+## Phase 6: GEO AI CLI 
 
 **geo-ai-cli** — Released `v0.1.0`. Install via npm:
 

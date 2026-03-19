@@ -2,6 +2,20 @@
 
 All notable changes to GEO AI Core will be documented in this file.
 
+## [0.1.1] - 2026-03-17
+
+### Security
+
+#### geo-ai-nest (`v0.1.1`)
+- **User-Agent truncation** — `GeoAIMiddleware`, `GeoAIGuard`, and `@IsAIBot()` now truncate the `User-Agent` header to 1 024 characters before processing, preventing memory abuse from maliciously large UA strings stored in `CrawlEntry.userAgent`.
+
+### Added
+
+#### geo-ai-nest (`v0.1.1`)
+- **`generateTimeout` option** — new `GeoAIOptions` field (default `30 000` ms). `GeoAIMiddleware` wraps `generateLlms()` in `Promise.race()` against a configurable timeout; returns `500 Internal Server Error` if the `ContentProvider` hangs.
+
+---
+
 ## [0.2.2] - 2026-03-12
 
 ### Security

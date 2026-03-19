@@ -1,7 +1,7 @@
 // geo-ai-core main entry point
 
 // Factory
-export { createGeoAI } from './create-geo-ai';
+export { createGeoAI, parseDuration } from './create-geo-ai';
 export type { GeoAIInstance } from './create-geo-ai';
 
 // Types & interfaces

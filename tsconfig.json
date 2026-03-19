@@ -3,13 +3,17 @@
   "compilerOptions": {
     "noEmit": true,
     "types": ["node"],
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
     "paths": {
       "geo-ai-core": ["./packages/core/src/index.ts"],
-      "geo-ai-core/ai": ["./packages/core/src/ai/index.ts"]
+      "geo-ai-core/ai": ["./packages/core/src/ai/index.ts"],
+      "geo-ai-nest": ["./packages/geo-ai-nest/src/index.ts"]
     }
   },
   "include": [
     "packages/core/src",
-    "packages/next/src"
+    "packages/next/src",
+    "packages/geo-ai-nest/src"
   ]
 }

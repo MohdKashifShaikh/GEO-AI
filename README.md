@@ -1,6 +1,6 @@
 # GEO AI Core
 
-![GEO AI](GEO-AI.png)
+![GEO AI](GEO-AI.png?v=2)
 
 **GEO AI – AI Search Optimization**
 
@@ -10,15 +10,17 @@ Universal TypeScript engine for optimizing websites for AI search engines.
 [![Node.js](https://img.shields.io/badge/Node.js-20%2B-339933.svg)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.5%2B-3178C6.svg)](https://www.typescriptlang.org/)
 
-A zero-dependency TypeScript engine that optimizes websites for AI search engines like ChatGPT, Claude, Gemini, Perplexity, DeepSeek, Grok, YandexGPT, GigaChat, and more. The core works with any Node.js environment — official integrations currently include Next.js, with WordPress and Shopify available as separate ecosystem packages.
+A zero-dependency TypeScript engine that optimizes websites for AI search engines like ChatGPT, Claude, Gemini, Perplexity, DeepSeek, Grok, YandexGPT, GigaChat, and more. The core works with any Node.js environment — official integrations currently include Next.js and NestJS, with WordPress and Shopify available as separate ecosystem packages.
 
 - **geo-ai-core** – Universal engine (llms.txt generation, bot rules, crawl tracking, caching, encryption, SEO signals, AI descriptions)
 - **geo-ai-next** – Next.js wrapper: static file generation, middleware + route handler
+- **geo-ai-nest** – NestJS wrapper: dynamic module, middleware, controller, guard, interceptor, decorators
 - **geo-ai-cli** – CLI tool: `geo-ai init / generate / validate / inspect` for any Node.js project
 
 > **Not sure what's what?**
 > - `geo-ai-core` — open-source npm library, zero dependencies, works anywhere Node.js runs
 > - `geo-ai-next` — open-source npm library, Next.js integration built on top of `geo-ai-core`
+> - `geo-ai-nest` — open-source npm library, NestJS integration built on top of `geo-ai-core`
 > - `geo-ai-cli` — open-source npm CLI, `geo-ai init / generate / validate / inspect` for any project
 > - [geoai.run](https://www.geoai.run) — the analyzer, docs, and llms.txt specification site
 
@@ -60,6 +62,7 @@ GEO AI provides infrastructure for **AI Search Optimization**:
 | WordPress / WooCommerce | `geo-ai-woo` |
 | Shopify | `geo-ai-shopify` |
 | Next.js | `geo-ai-next` |
+| NestJS | `geo-ai-nest` |
 | Any Node.js | `geo-ai-core` |
 | CLI (any project) | `geo-ai-cli` |
 
@@ -156,6 +159,8 @@ AES-256-GCM encryption for API keys via `node:crypto`. Format: `base64(IV[12] + 
 npm install geo-ai-core
 # or for Next.js projects:
 npm install geo-ai-next
+# or for NestJS projects:
+npm install geo-ai-nest
 # or CLI (any project):
 npm install --save-dev geo-ai-cli
 # or globally:
@@ -276,6 +281,62 @@ export const { GET } = createLlmsHandler({
 });
 ```
 
+### NestJS
+
+Register `GeoAIModule` once at the application root — middleware, controller, guard, interceptor, and decorators are all available automatically:
+
+```typescript
+// app.module.ts
+import { GeoAIModule } from 'geo-ai-nest';
+
+@Module({
+  imports: [
+    GeoAIModule.forRoot({
+      siteName: 'My Site',
+      siteUrl: 'https://example.com',
+      provider: new MyProvider(),
+      isGlobal: true,
+      injectLinkHeader: true, // inject Link header on all responses
+    }),
+  ],
+})
+export class AppModule {}
+```
+
+Async configuration with `useFactory`:
+
+```typescript
+GeoAIModule.forRootAsync({
+  imports: [ConfigModule],
+  inject: [ConfigService],
+  useFactory: (config: ConfigService) => ({
+    siteName: config.get('SITE_NAME'),
+    siteUrl: config.get('SITE_URL'),
+    provider: new MyProvider(),
+    cache: '24h',
+  }),
+})
+```
+
+Use `GeoAIService` anywhere via DI, protect routes with `GeoAIGuard`, and inject the detected bot name with `@IsAIBot()`:
+
+```typescript
+import { GeoAIService, GeoAIGuard, IsAIBot } from 'geo-ai-nest';
+
+@Controller('ai')
+@UseGuards(GeoAIGuard) // allow only verified AI bots
+export class AiController {
+  constructor(private readonly geoAI: GeoAIService) {}
+
+  @Get('meta')
+  getMeta(@IsAIBot() bot: string | null) {
+    return { bot, meta: this.geoAI.generateMetaTags() };
+  }
+}
+```
+
+`/llms.txt`, `/llms-full.txt`, and `/.well-known/llms.txt` are served automatically by the built-in middleware. `/robots-ai.txt` is served by the built-in controller.
+
 ### CLI
 
 Generate and validate `llms.txt` without writing any code:
@@ -346,6 +407,7 @@ interface GeoAIConfig {
 |---------|-------------|-------------|
 | `geo-ai-core` | Universal engine | `.` (main), `./ai` (AI generator) |
 | `geo-ai-next` | Next.js: static generation, middleware, route handler | `.` |
+| `geo-ai-nest` | NestJS: dynamic module, middleware, controller, guard, interceptor, decorators | `.` |
 | `geo-ai-cli` | CLI: init, generate, validate, inspect | `geo-ai` binary |
 
 ---
